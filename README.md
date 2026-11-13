@@ -59,8 +59,8 @@ Observação: as métricas de "antes" vêm de medições com variação grande (
 
 ## Relatórios
 
-- [Relatório antes: print ou PDF do Lighthouse]
-- [Relatório depois: print ou PDF do Lighthouse]
+- [relatorio_antes.pdf](relatorio_antes.pdf): medições iniciais do Lighthouse
+- [relatorio_depois.pdf](relatorio_depois.pdf): medições finais do Lighthouse
 
 ## Como rodar
 
