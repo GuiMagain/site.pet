@@ -1,0 +1,13 @@
+{
+  "name": "pet-style",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing page Pet&Style com Tailwind CSS compilado",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/input.css -o ./output.css --minify",
+    "watch:css": "tailwindcss -i ./src/input.css -o ./output.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}
