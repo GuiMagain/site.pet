@@ -32,16 +32,16 @@ Cada versão foi medida no Lighthouse, modo Mobile, com o servidor local reinici
 
 ### Versão 1: inicial (antes das otimizações)
 
-Medições da primeira rodada, com a versão original da página.
+Três capturas da versão original da página, medidas no Lighthouse 13.5.0 (modo Mobile) antes de qualquer alteração. As pontuações variaram entre 81 e 90 no Desempenho, por isso a mediana é usada no comparativo.
 
-| Categoria | Mediana |
-|---|---|
-| Desempenho | 87 (variou de 81 a 92) |
-| Acessibilidade | 89 |
-| Práticas recomendadas | 74 |
-| SEO | 91 |
+| Categoria | 1ª execução | 2ª execução | 3ª execução | Mediana |
+|---|---|---|---|---|
+| Desempenho | 90 | 81 | 90 | **90** |
+| Acessibilidade | 90 | 90 | 92 | **90** |
+| Práticas recomendadas | 74 | 74 | 78 | **74** |
+| SEO | 91 | 91 | 100 | **91** |
 
-| Métrica | Valor (1ª execução) |
+| Métrica (1ª execução) | Valor |
 |---|---|
 | First Contentful Paint | 0,6 s |
 | Largest Contentful Paint | 1,9 s |
@@ -70,34 +70,40 @@ Economia estimada na auditoria "Melhorar a entrega de imagens": caiu de 1.668 Ki
 
 ### Versão 3: com Tailwind CSS compilado (sem CDN)
 
-<!-- Preencher com a mediana de pelo menos três execuções após a troca do CDN -->
+Três execuções, no Lighthouse 13.5.0, modo Mobile, com o servidor local reiniciado antes de cada rodada (15/11/2026, 17h26, 17h31 e 17h32).
 
-| Categoria | Mediana |
-|---|---|
-| Desempenho | a preencher |
-| Acessibilidade | a preencher |
-| Práticas recomendadas | a preencher |
-| SEO | a preencher |
+| Execução | Desempenho | Acessibilidade | Práticas | SEO |
+|---|---|---|---|---|
+| 1ª | 99 | 92 | 78 | 100 |
+| 2ª | 100 | 92 | 78 | 100 |
+| 3ª | 100 | 92 | 78 | 100 |
+| **Mediana** | **100** | **92** | **78** | **100** |
 
-| Métrica | Valor |
-|---|---|
-| First Contentful Paint | a preencher |
-| Largest Contentful Paint | a preencher |
-| Total Blocking Time | a preencher |
-| Cumulative Layout Shift | a preencher |
-| Speed Index | a preencher |
+| Métrica | 1ª | 2ª | 3ª | **Mediana** |
+|---|---|---|---|---|
+| First Contentful Paint | 0,8 s | 0,8 s | 0,8 s | **0,8 s** |
+| Largest Contentful Paint | 1,3 s | 1,3 s | 1,3 s | **1,3 s** |
+| Total Blocking Time | 100 ms | 0 ms | 50 ms | **50 ms** |
+| Cumulative Layout Shift | 0 | 0 | 0 | **0** |
+| Speed Index | 0,8 s | 0,8 s | 0,8 s | **0,8 s** |
+
+Economia estimada nas auditorias: entrega de imagens de 27 KiB, cache de 64 KiB e HTTP moderno de 150 ms.
 
 ## Leitura dos resultados
 
-- **Entrega de imagens**: é o ganho mais claro do projeto, com a economia estimada caindo de 1.668 KiB para 21 KiB.
-- **Acessibilidade e SEO**: melhoraram de forma consistente em todas as execuções da versão 2, por causa das mudanças de HTML, contraste e metadados.
-- **Desempenho**: a variação entre execuções foi grande (81 a 92 na versão 1), então a mudança de 87 para 88 não é conclusiva. A versão 3 é a que deve mostrar o efeito da troca do CDN, porque o Tailwind deixa de bloquear a renderização.
-- **LCP e FCP**: subiram entre a versão 1 e a versão 2. Como a medição da versão 1 foi de uma única execução, a comparação deve ser lida com cautela.
+- **Desempenho**: subiu de 88 (versão 2) para 100 na mediana. A troca do CDN do Tailwind pelo CSS compilado foi o principal fator, já que o script bloqueante deixou de existir.
+- **TBT**: caiu de 290 a 450 ms (versão 2) para 50 ms na mediana, e de 130 ms na primeira medição original. É o efeito direto da remoção do script bloqueante.
+- **LCP**: caiu de 2,3 s (versão 2) para 1,3 s, e de 1,9 s na primeira medição original.
+- **FCP e Speed Index**: caíram de 2,3 s para 0,8 s em relação à versão 2. Em relação à primeira medição original (0,6 s e 0,7 s), ficaram um pouco acima. A medição original foi uma única execução, então a comparação deve ser lida com cautela.
+- **Entrega de imagens**: a economia estimada caiu de 1.668 KiB (versão original) para 27 KiB.
+- **Acessibilidade (92)**: ainda aparece a auditoria de contraste, "As cores de primeiro e segundo plano não têm uma taxa de contraste suficiente". É o principal ponto a corrigir a seguir.
+- **Práticas recomendadas (78)**: o que pesa são os alertas de HTTPS, que aparecem porque o servidor local roda em HTTP. Na versão publicada com HTTPS, esses alertas devem diminuir.
+- **SEO (100)**: estável em todas as versões desde a correção do HTML e do `robots.txt`.
 
 ## Relatórios
 
 - [relatorio_antes.pdf](relatorio_antes.pdf): capturas do Lighthouse das medições iniciais
-- [relatorio_depois.pdf](relatorio_depois.pdf): capturas do Lighthouse das medições da versão 2
+- [relatorio_depois.pdf](relatorio_depois.pdf): relatórios completos do Lighthouse das três execuções da versão 3 (CSS compilado)
 
 ## Como rodar
 
